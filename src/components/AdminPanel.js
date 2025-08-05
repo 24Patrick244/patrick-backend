@@ -26,7 +26,7 @@ const AdminPanel = ({ onNavigate }) => {
   const [editProductId, setEditProductId] = useState(null);
   const [editProduct, setEditProduct] = useState(null);
 
-  const API_URL = "https://patrick-furnitures.onrender.com/api/products";
+  const API_URL = "http://localhost:5001/api/products";
 
   // Available currencies with scrollbar
   const currencies = [

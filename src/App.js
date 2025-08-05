@@ -34,7 +34,7 @@ const currencyRates = {
   XOF: { symbol: "CFA", rate: 600 }
 };
 
-const API_URL = "https://patrick-furnitures.onrender.com/api/products";
+const API_URL = "http://localhost:5001/api/products";
 
 function App() {
   const [page, setPage] = useState("home");

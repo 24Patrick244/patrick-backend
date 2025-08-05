@@ -1,19 +1,35 @@
 {
   "name": "patrick-furnitures",
   "version": "1.0.0",
-  "description": "Patrick Furnitures - Frontend and Backend",
+  "description": "Patrick Furnitures - E-commerce furniture store with MySQL backend",
+  "main": "server-backend.js",
   "scripts": {
     "start": "node server-backend.js",
-    "build": "echo 'Build completed'",
-    "dev": "node server-backend.js"
+    "dev": "nodemon server-backend.js",
+    "test": "node test-production-readiness.js",
+    "setup": "node setup-mysql.js",
+    "build": "echo 'Build completed'"
   },
+  "keywords": [
+    "furniture",
+    "ecommerce",
+    "mysql",
+    "express",
+    "react"
+  ],
+  "author": "Patrick Furnitures",
+  "license": "MIT",
   "dependencies": {
-    "express": "^4.18.2",
-    "mysql2": "^3.9.6",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "mysql2": "^3.9.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
   },
   "engines": {
-    "node": ">=14.0.0"
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
   }
 }
