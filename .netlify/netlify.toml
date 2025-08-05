@@ -1,0 +1,48 @@
+functionsDirectory = "C:\\Users\\izaba\\patrick-furnitures\\my_functions"
+functionsDirectoryOrigin = "ui"
+redirectsOrigin = "config"
+plugins = []
+headers = []
+
+[dev]
+command = "npm start"
+port = 3000.0
+publish = "build"
+
+[functions]
+
+[functions."*"]
+
+[build]
+publish = "C:\\Users\\izaba\\patrick-furnitures\\build"
+publishOrigin = "config"
+commandOrigin = "config"
+command = "npm run build"
+functions = "C:\\Users\\izaba\\patrick-furnitures\\my_functions"
+
+[build.environment]
+NODE_VERSION = "18"
+
+[build.processing]
+
+[build.processing.css]
+
+[build.processing.html]
+
+[build.processing.images]
+
+[build.processing.js]
+
+[build.services]
+
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200.0
+force = false
+
+[redirects.query]
+
+[redirects.conditions]
+
+[redirects.headers]

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment API Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .test { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+        .success { background: #d4edda; border-color: #c3e6cb; }
+        .error { background: #f8d7da; border-color: #f5c6cb; }
+        button { padding: 10px 20px; margin: 5px; cursor: pointer; }
+        pre { background: #f8f9fa; padding: 10px; border-radius: 3px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <h1>🔧 Payment API Test</h1>
+    
+    <div class="test">
+        <h3>1. Health Check</h3>
+        <button onclick="testHealth()">Test Health</button>
+        <div id="health-result"></div>
+    </div>
+    
+    <div class="test">
+        <h3>2. Payment Request</h3>
+        <button onclick="testPayment()">Test Payment Request</button>
+        <div id="payment-result"></div>
+    </div>
+    
+    <div class="test">
+        <h3>3. Payment Status</h3>
+        <button onclick="testStatus()">Test Status Check</button>
+        <div id="status-result"></div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000';
+        
+        async function testHealth() {
+            try {
+                const response = await fetch(`${API_BASE}/api/health`);
+                const data = await response.json();
+                document.getElementById('health-result').innerHTML = 
+                    `<div class="success"><pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+            } catch (error) {
+                document.getElementById('health-result').innerHTML = 
+                    `<div class="error"><pre>Error: ${error.message}</pre></div>`;
+            }
+        }
+        
+        async function testPayment() {
+            try {
+                const response = await fetch(`${API_BASE}/api/payment/request`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        phoneNumber: '+250783722764',
+                        amount: 100,
+                        paymentMethod: 'momo',
+                        currency: 'RWF'
+                    })
+                });
+                
+                const data = await response.json();
+                document.getElementById('payment-result').innerHTML = 
+                    `<div class="success"><pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+                
+                // Store reference ID for status test
+                if (data.referenceId) {
+                    window.testReferenceId = data.referenceId;
+                }
+            } catch (error) {
+                document.getElementById('payment-result').innerHTML = 
+                    `<div class="error"><pre>Error: ${error.message}</pre></div>`;
+            }
+        }
+        
+        async function testStatus() {
+            if (!window.testReferenceId) {
+                document.getElementById('status-result').innerHTML = 
+                    `<div class="error"><pre>No reference ID available. Run payment test first.</pre></div>`;
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/payment/status/${window.testReferenceId}?paymentMethod=momo`);
+                const data = await response.json();
+                document.getElementById('status-result').innerHTML = 
+                    `<div class="success"><pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+            } catch (error) {
+                document.getElementById('status-result').innerHTML = 
+                    `<div class="error"><pre>Error: ${error.message}</pre></div>`;
+            }
+        }
+        
+        // Auto-test health on page load
+        window.onload = testHealth;
+    </script>
+</body>
+</html> 
